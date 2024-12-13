@@ -9,7 +9,7 @@
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
         @inertiaHead
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}"> 
     </head>
     <body>
         @inertia
@@ -18,4 +18,3 @@
         </script>
     </body>
 </html>
-
