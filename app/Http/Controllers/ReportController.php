@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Imports\CombinedImport;
-use App\Imports\LinksImport;
-use App\Imports\ReportImport;
-use App\Imports\ReportsImport;
-use App\Imports\Sheet1Import;
-use App\Imports\Sheet2Import;
+use App\Models\Links;
+use App\Models\Reports;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
@@ -19,7 +17,9 @@ class ReportController extends Controller
      */
     public function index()
     {
-        //
+        $links =Links::all();
+        $reports=Reports::all();
+        return Inertia::render("Report/Index",['data_links'=>$links,'data_reports'=>$reports]);
     }
 
     /**
@@ -50,7 +50,9 @@ class ReportController extends Controller
         // $links= Excel::import(new LinksImport, $file);
 
        Excel::import(new CombinedImport(), $file);
-        return response()->json(['check'=>true]);
+       $links =Links::all();
+        $reports=Reports::all();
+        return response()->json(['check'=>true,'links'=>$links,'reports'=>$reports]);
     }
     /**
      * Display the specified resource.

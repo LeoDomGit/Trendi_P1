@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -14,6 +16,10 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render("Roles/Index");
-});
+Route::get('/dashboard',[ReportController::class, 'index']);
+Route::get('/register',[UserController::class,'register']);
+Route::post('/register',[UserController::class,'submit_register']);
+Route::get('/',[UserController::class,'login']);
+Route::post('/login',[UserController::class,'checkLogin']);
+Route::post('/upload',[ReportController::class, 'import']);
+
