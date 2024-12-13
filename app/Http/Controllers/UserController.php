@@ -66,7 +66,11 @@ class UserController extends Controller
         Session::put('user', $user);
         return response()->json(['check'=>true]);
     }
-
+    public function logout(){
+        Auth::logout();
+        Session::forget('user');
+        return redirect('/');
+    }
     /**
      * Display the specified resource.
      */

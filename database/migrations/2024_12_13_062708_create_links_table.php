@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->string('subject',255);
-            $table->string('link',255);
+            $table->string('subject',255)->nullable();
+            $table->string('link',255)->nullable();
             $table->timestamp('date_created')->nullable();
             $table->timestamp('update_dashboard')->nullable();
             $table->timestamp('fb_camp_date')->nullable();

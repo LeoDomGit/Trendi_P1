@@ -16,10 +16,14 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/dashboard',[ReportController::class, 'index']);
-Route::get('/register',[UserController::class,'register']);
-Route::post('/register',[UserController::class,'submit_register']);
-Route::get('/',[UserController::class,'login']);
+Route::middleware(['checkLogin'])->group(function () {
+    Route::get('/dashboard',[ReportController::class, 'index']);
+    Route::get('/register',[UserController::class,'register']);
+    Route::post('/register',[UserController::class,'submit_register']);
+    Route::get('/logout',[UserController::class,'logout'])->name('logout');
+    Route::post('/upload',[ReportController::class, 'import']);
+});
+Route::get('/',[UserController::class,'login'])->name('login');
 Route::post('/login',[UserController::class,'checkLogin']);
-Route::post('/upload',[ReportController::class, 'import']);
+
 
