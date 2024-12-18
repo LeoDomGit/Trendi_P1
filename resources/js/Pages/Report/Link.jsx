@@ -344,26 +344,30 @@ function Link({data_links}) {
                         ))}
                     </Dropzone>
                     <button className="mt-2 btn btn-outline-primary"  onClick={(e)=>handleUpload()}>Upload</button>
+                    <a href="/export-links" className="btn btn-outline-warning ms-3 mt-2">Download</a>
+
                 </div>
             </div>
             <div className="row mt-3">
                 <div className="col-12">
                     <h4>Links table</h4>
                 <Box sx={{width: '100%' }}>
-                <DataGrid
-                  rows={links}
-                  columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: {
-                        pageSize: 5,
+                {links.length>0 &&(
+                    <DataGrid
+                    rows={links}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 5,
+                        },
                       },
-                    },
-                  }}
-                  pageSizeOptions={[5]}
-                  checkboxSelection
-                  disableRowSelectionOnClick
-                />
+                    }}
+                    pageSizeOptions={[5]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                  />
+                )}
               </Box>
 
                 </div>

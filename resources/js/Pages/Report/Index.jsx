@@ -287,6 +287,7 @@ function Index({data_reports}) {
                         ))}
                     </Dropzone>
                     <button className="mt-2 btn btn-outline-primary"  onClick={(e)=>handleUpload()}>Upload</button>
+                    <a href="/export-reports" className="btn btn-outline-warning ms-3 mt-2">Download</a>
                 </div>
             </div>
             <div className="row mt-3">

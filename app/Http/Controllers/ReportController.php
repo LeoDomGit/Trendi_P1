@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AdsenseSearchExampleExport;
+use App\Exports\LinksExport;
+use App\Exports\Page1CampExampleExport;
+use App\Exports\ReportsExampleExport;
+use App\Exports\SearchCampExampleExport;
 use App\Imports\AdsenseSearchImport;
 use App\Imports\CombinedImport;
 use App\Imports\LinksImport;
@@ -163,11 +168,30 @@ class ReportController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function exportSearchCamp()
     {
-        //
+        return Excel::download(new SearchCampExampleExport, 'search_camp.xlsx');
     }
 
+    public function exportPage1Camp()
+    {
+        return Excel::download(new Page1CampExampleExport, 'page1camp.xlsx');
+    }
+
+    public function exportAbsenseSearch()
+    {
+        return Excel::download(new AdsenseSearchExampleExport, 'absense_search.xlsx');
+    }
+
+    public function exportReports()
+    {
+        return Excel::download(new ReportsExampleExport, 'reports.xlsx');
+    }
+
+    public function exportLinks()
+    {
+        return Excel::download(new LinksExport, 'links.xlsx');
+    }
     /**
      * Remove the specified resource from storage.
      */

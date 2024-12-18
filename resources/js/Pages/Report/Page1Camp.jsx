@@ -73,6 +73,7 @@ function Page1Camp({ data_page1_camps }) {
           <button className="mt-2 btn btn-outline-primary" onClick={handleUpload}>
             Upload
           </button>
+          <a href="/export-page1-camp" className="btn btn-outline-warning ms-3 mt-2">Download</a>
         </div>
       </div>
 
@@ -80,18 +81,20 @@ function Page1Camp({ data_page1_camps }) {
         <div className="col-12">
           <h4>Page 1 Camp Table</h4>
           <Box sx={{ width: '100%' }}>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { pageSize: 5 },
-                },
-              }}
-              pageSizeOptions={[5]}
-              checkboxSelection
-              disableRowSelectionOnClick
-            />
+           {rows.length>0 &&(
+             <DataGrid
+             rows={rows}
+             columns={columns}
+             initialState={{
+               pagination: {
+                 paginationModel: { pageSize: 5 },
+               },
+             }}
+             pageSizeOptions={[5]}
+             checkboxSelection
+             disableRowSelectionOnClick
+           />
+           )}
           </Box>
         </div>
       </div>

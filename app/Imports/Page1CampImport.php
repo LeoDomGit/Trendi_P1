@@ -17,7 +17,7 @@ class Page1CampImport implements ToCollection
                 continue;
             }
 
-            $timestamp = $this->parseTimestamp($row[0]);
+            $timestamp = $this->parseTimestamp($row[1]);
             $record=Page1Camp::where('link_id', $row[1])
             ->where('date',$timestamp)
             ->first();

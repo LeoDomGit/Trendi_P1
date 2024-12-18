@@ -12,56 +12,58 @@ class ReportsImport implements ToCollection
     public function collection(Collection $rows)
     {
         foreach ($rows as $key => $row) {
-            // Skip the first row (header row)
-            if ($key == 0 || $row[0]==null) {
+            // Skip the first row (header row) and rows where the first column is null
+            if ($key == 0 || $row[0] === null) {
                 continue;
             }
+
             $timestamp = $this->parseTimestamp($row[0]);
-            $record_data=Reports::all();
-            $record =Reports::where('timestamp',$timestamp)->first();
-            if(!$record){
+            $record = Reports::where('timestamp', $timestamp)->first();
+
+            if (!$record) {
                 Reports::create([
-                    'timestamp' =>$timestamp,
-                    'query' => $row[1],
-                    'referrer' => $row[2],
-                    'lpurl' => $row[3],
-                    'ip' => $row[4],
-                    'event' => $row[5],
-                    'iframeSrc' => $row[6],
-                    'fbclid' => $row[7],
-                    'track_id' => $row[8],
-                    'gads' => $row[9],
-                    'page' => $row[10],
-                    'ny' => $row[11],
-                    'rs' => $row[12],
-                    'clkt' => $row[13],
-                    'nx' => $row[14],
-                    'nm' => $row[15],
-                    'rsToken' => $row[16],
-                    'site' => $row[17],
-                    'is' => $row[18],
-                    'locale' => $row[19],
-                    'nb' => $row[20],
-                    'slug' => $row[21],
-                    'rurl' => $row[22],
-                    'category' => $row[23],
-                    'sheetsname' => $row[24],
-                    'sfnsn' => $row[25],
-                    'referrer2' => $row[26],
-                    'qsrc' => $row[27],
-                    'gtm_debug' => $row[28],
-                    'utm_id' => $row[29],
-                    'utm_campaign' => $row[30],
-                    'utm_content' => $row[31],
-                    'utm_term' => $row[32],
-                    'utm_source' => $row[33],
-                    'utm_medium' => $row[34],
-                    'src' => $row[35],
-                    'from' => $row[36],
+                    'timestamp'   => $timestamp,
+                    'query'       => $row[1] ?? null,
+                    'referrer'    => $row[2] ?? null,
+                    'lpurl'       => $row[3] ?? null,
+                    'ip'          => $row[4] ?? null,
+                    'event'       => $row[5] ?? null,
+                    'iframeSrc'   => $row[6] ?? null,
+                    'fbclid'      => $row[7] ?? null,
+                    'track_id'    => $row[8] ?? null,
+                    'gads'        => $row[9] ?? null,
+                    'page'        => $row[10] ?? null,
+                    'ny'          => $row[11] ?? null,
+                    'rs'          => $row[12] ?? null,
+                    'clkt'        => $row[13] ?? null,
+                    'nx'          => $row[14] ?? null,
+                    'nm'          => $row[15] ?? null,
+                    'rsToken'     => $row[16] ?? null,
+                    'site'        => $row[17] ?? null,
+                    'is'          => $row[18] ?? null,
+                    'locale'      => $row[19] ?? null,
+                    'nb'          => $row[20] ?? null,
+                    'slug'        => $row[21] ?? null,
+                    'rurl'        => $row[22] ?? null,
+                    'category'    => $row[23] ?? null,
+                    'sheetsname'  => $row[24] ?? null,
+                    'sfnsn'       => $row[25] ?? null,
+                    'referrer2'   => $row[26] ?? null,
+                    'qsrc'        => $row[27] ?? null,
+                    'gtm_debug'   => $row[28] ?? null, // Safely access key 28
+                    'utm_id'      => $row[29] ?? null,
+                    'utm_campaign'=> $row[30] ?? null,
+                    'utm_content' => $row[31] ?? null,
+                    'utm_term'    => $row[32] ?? null,
+                    'utm_source'  => $row[33] ?? null,
+                    'utm_medium'  => $row[34] ?? null,
+                    'src'         => $row[35] ?? null,
+                    'from'        => $row[36] ?? null,
                 ]);
             }
         }
     }
+
     public function sheets(): array
     {
         return [

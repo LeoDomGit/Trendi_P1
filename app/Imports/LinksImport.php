@@ -14,13 +14,13 @@ class LinksImport implements ToCollection
                 continue;
             }
             Links::create([
-                'subject'=>$row[1],
-                'link'=>$row[2],
-                'id_link'=>$row[3],
-                'date_created'=>$row[4],
-                'update_dashboard'=>$row[5],
-                'fb_camp_date'=>$row[6],
-                'status'=>$row[7],
+                'subject'=>$row[0] ?? null,
+                'link'=>$row[1] ?? null,
+                'id_link'=>$row[2] ?? null,
+                'date_created'=>$row[3] ?? null,
+                'update_dashboard'=>$row[4] ?? null,
+                'fb_camp_date'=>$row[5] ?? null,
+                'status'=>$row[6] ?? null,
             ]);
         }
     }

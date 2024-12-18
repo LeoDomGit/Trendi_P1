@@ -85,6 +85,7 @@ function AdsenseSearch({ data }) {
           <button className="mt-2 btn btn-outline-primary" onClick={handleUpload}>
             Upload
           </button>
+          <a href="/export-adsense-search" className="btn btn-outline-warning ms-3 mt-2">Download</a>
         </div>
       </div>
 
@@ -92,18 +93,20 @@ function AdsenseSearch({ data }) {
         <div className="col-12">
           <h4>Adsense Search Table</h4>
           <Box sx={{ width: '100%' }}>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { pageSize: 5 },
-                },
-              }}
-              pageSizeOptions={[5]}
-              checkboxSelection
-              disableRowSelectionOnClick
-            />
+            {rows.length>0 && (
+                <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { pageSize: 5 },
+                  },
+                }}
+                pageSizeOptions={[5]}
+                checkboxSelection
+                disableRowSelectionOnClick
+              />
+            )}
           </Box>
         </div>
       </div>
