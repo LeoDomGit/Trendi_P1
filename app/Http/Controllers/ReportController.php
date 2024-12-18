@@ -31,7 +31,7 @@ class ReportController extends Controller
     public function index()
     {
         $links = Links::all();
-        $reports = Reports::all();
+        $links = $links->isEmpty() ? [] : $links;
         return Inertia::render("Report/Link", ['data_links' => $links]);
     }
 
@@ -40,8 +40,9 @@ class ReportController extends Controller
      */
     public function reports()
     {
-        $reports = Reports::all();
-        return Inertia::render("Report/Index", ['data_reports' => $reports]);
+        $data = Reports::all();
+        $data = $data->isEmpty() ? [] : $data;
+        return Inertia::render("Report/Index", ['data_reports' => $data]);
     }
 
     /**
@@ -50,6 +51,7 @@ class ReportController extends Controller
     public function AdsenseSearch(Request $request)
     {
         $data =AdsenseSearch::all();
+        $data = $data->isEmpty() ? [] : $data;
         return Inertia::render("Report/AdsenseSearch", ['data' => $data]);
 
     }
@@ -98,15 +100,15 @@ class ReportController extends Controller
         $file = $request->file('file');
         Excel::import(new ReportsImport(), $file);
         $reports = Reports::select('id', 'timestamp', 'ip')
-    ->get()
-    ->groupBy(function($date) {
-        return $date->timestamp . $date->ip;
-    });
-    foreach ($reports as $group) {
-        $group->shift();
-        foreach ($group as $duplicate) {
-            $duplicate->delete();
-        }
+        ->get()
+        ->groupBy(function($date) {
+            return $date->timestamp . $date->ip;
+        });
+        foreach ($reports as $group) {
+            $group->shift();
+            foreach ($group as $duplicate) {
+                $duplicate->delete();
+            }
     }
     $reports = Reports::distinct('ip', 'timestamp')
     ->get();
@@ -127,6 +129,7 @@ class ReportController extends Controller
         $file = $request->file('file');
         Excel::import(new Page1CampImport(), $file);
         $result = Page1Camp::all();
+        $result = $result->isEmpty() ? [] : $result;
         return response()->json(['check' => true, 'result' => $result]);
     }
     /**
@@ -135,6 +138,7 @@ class ReportController extends Controller
     public function page_1_camp()
     {
         $result = Page1Camp::all();
+        $result = $result->isEmpty() ? [] : $result;
         return Inertia::render("Report/Page1Camp", ['data_page1_camps' => $result]);
     }
     /**
