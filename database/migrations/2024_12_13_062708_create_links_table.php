@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('subject',255)->nullable();
             $table->string('link',255)->nullable();
-            $table->timestamp('date_created')->nullable();
-            $table->timestamp('update_dashboard')->nullable();
-            $table->timestamp('fb_camp_date')->nullable();
-            $table->boolean('status')->default(1);
+            $table->string('date_created',255)->nullable();
+            $table->string('update_dashboard',255)->nullable();
+            $table->string('fb_camp_date',255)->nullable();
+            $table->string('status',255)->nullable();
             $table->timestamps();
         });
     }

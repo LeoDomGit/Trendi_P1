@@ -29,10 +29,7 @@ class CombinedImport implements ToCollection, WithMultipleSheets
     public function sheets(): array
     {
         return [
-            // Sheet 0 corresponds to LinksImport
             0 => new LinksImport(),
-            // Sheet 1 corresponds to ReportsImport
-            1 => new ReportsImport(),
         ];
     }
 }

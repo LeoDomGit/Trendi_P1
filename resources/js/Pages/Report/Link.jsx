@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Dropzone, FileMosaic } from "@dropzone-ui/react";
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Select, Switch, Typography } from "@mui/material";
 import axios from 'axios';
-function Index({data_reports}) {
+function Link({data_links}) {
     const [files, setFiles] = useState([]);
     const updateFiles = (acceptedFiles) => {
       setFiles(acceptedFiles);
@@ -20,24 +20,80 @@ function Index({data_reports}) {
         const formData = new FormData();
         formData.append('file', files[0].file);
         try {
-          const response = await axios.post('/upload_report', formData, {
+          const response = await axios.post('/upload', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
           });
           alert('Files uploaded successfully!');
-          setReports(response.data.reports);
+          setLinks(response.data.links);
           setFiles([]);
         } catch (error) {
           console.error('Error uploading files:', error);
           alert('An error occurred while uploading files');
         }
       };
-    const [reports,setReports]=useState(data_reports);
+    const [links,setLinks]=useState(data_links);
     const formatCreatedAt = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleString();
     };
+    const columns = [
+        {
+          field: "id",
+          headerName: "#",
+          width: 100,
+          renderCell: (params) => params.row.id,
+        },
+        {
+            field: "id_link",
+            headerName: "ID Link",
+            editable: false,
+            flex: 1,
+        },
+        {
+          field: "subject",
+          headerName: "Subject",
+          editable: false,
+          flex: 1,
+        },
+        {
+          field: "link",
+          headerName: "Link",
+          editable: false,
+          flex: 1,
+        },
+        {
+          field: "date_created",
+          headerName: "Date Created",
+          width: 200,
+          valueGetter: (params) => formatCreatedAt(params),
+        },
+        {
+          field: "update_dashboard",
+          headerName: "Update Dashboard",
+          editable: false,
+          flex: 1,
+        },
+        {
+          field: "fb_camp_date",
+          headerName: "FB Campaign Date",
+          editable: false,
+          flex: 1,
+        },
+        {
+            field: "status",
+            headerName: "Status",
+            editable: false,
+            flex: 1,
+          },
+        {
+          field: "created_at",
+          headerName: "Created At",
+          width: 200,
+          valueGetter: (params) => formatCreatedAt(params),
+        },
+      ];
       const columns2 = [
         {
           field: "id",
@@ -50,6 +106,7 @@ function Index({data_reports}) {
           field: "timestamp",
           headerName: "Timestamp",
           width: 200,
+          valueGetter: (params) => formatCreatedAt(params),
           editable: false,
         },
         {
@@ -291,11 +348,11 @@ function Index({data_reports}) {
             </div>
             <div className="row mt-3">
                 <div className="col-12">
-              <Box sx={{ width: '100%' }}>
-              <h4>Reports table</h4>
-              <DataGrid
-                  rows={reports}
-                  columns={columns2}
+                    <h4>Links table</h4>
+                <Box sx={{width: '100%' }}>
+                <DataGrid
+                  rows={links}
+                  columns={columns}
                   initialState={{
                     pagination: {
                       paginationModel: {
@@ -308,10 +365,11 @@ function Index({data_reports}) {
                   disableRowSelectionOnClick
                 />
               </Box>
+
                 </div>
             </div>
         </>
     );
 }
 
-export default Index;
+export default Link;

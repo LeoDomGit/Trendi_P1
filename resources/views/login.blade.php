@@ -143,7 +143,7 @@
                         dataType: "JSON",
                         success: function(res) {
                             if(res.check==true){
-                                window.location.replace('/dashboard')
+                                window.location.replace('/links')
                             }else if(res.check==false){
                                 if(res.msg){
                                     alert(res.msg);
