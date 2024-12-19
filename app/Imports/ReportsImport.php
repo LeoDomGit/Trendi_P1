@@ -17,12 +17,12 @@ class ReportsImport implements ToCollection
                 continue;
             }
 
-            $timestamp = $this->parseTimestamp($row[0]);
-            $record = Reports::where('timestamp', $timestamp)->first();
+            $dateCreated = $this->parseDateCreated($row[0] ?? null);
+            $record = Reports::where('timestamp', $dateCreated)->first();
 
-            if (!$record) {
+            if (!$record && $dateCreated) {
                 Reports::create([
-                    'timestamp'   => $timestamp,
+                    'timestamp'   => $dateCreated,
                     'query'       => $row[1] ?? null,
                     'referrer'    => $row[2] ?? null,
                     'lpurl'       => $row[3] ?? null,
@@ -70,12 +70,28 @@ class ReportsImport implements ToCollection
             0 => new ReportsImport(),
         ];
     }
-    private function parseTimestamp($value)
+    private function parseDateCreated($dateText)
     {
-        if (is_numeric($value)) {
-            $seconds = $value * 86400;
-            $datetime = Carbon::createFromTimestamp($seconds);
-            return $datetime->format('Y-m-d H:i:s');
+        if ($dateText) {
+            // Convert the text to a Carbon instance assuming the format dd/mm/yyyy hh:mm:ss
+            try {
+                return Carbon::createFromFormat('d/m/Y H:i:s', $dateText)->toDateTimeString();
+            } catch (\Exception $e) {
+                Log::error('Invalid date format: ' . $dateText);
+                return null; // Return null if the date format is invalid
+            }
         }
+
+        return null; // Return null if the date is not provided
     }
+    private function convertExcelDate($excelDate)
+    {
+        if (is_numeric($excelDate)) {
+            // Convert using the reference date 1900-01-01 (Excel's base date)
+            return Carbon::createFromFormat('Y-m-d', '1900-01-01')->addDays($excelDate - 2)->toDateTimeString();
+        }
+
+        return null; // Return null if the date is not valid
+    }
+
 }
